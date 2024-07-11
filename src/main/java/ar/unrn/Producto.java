@@ -27,6 +27,23 @@ public class Producto {
      */
     private String tipo;
 
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
     /**
      * Este constructor público recibe como argumento un precio, un nombre y un tipo
      * que se lo asigna a los atributos de la clase. Lanza una excepción en caso de que
