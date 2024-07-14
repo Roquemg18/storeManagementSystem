@@ -23,7 +23,7 @@ public class CrearTicketGUI extends JPanel {
     private JButton buttonFinal;
 
     public CrearTicketGUI(Inventario inventario, Carrito carrito, ClientesPremium clientes,
-                          ArrayList<DescuentoStrategy> descuentosList,JFrame frame) {
+                          ArrayList<DescuentoStrategy> descuentosList) {
 
         panelMain = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -65,9 +65,8 @@ public class CrearTicketGUI extends JPanel {
         buttonFinal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
+                //frame.dispose();
             }
         });
     }
-
 }

@@ -18,7 +18,7 @@ public class LoginPremiumGUI extends JPanel {
     private JTextField inputDni;
     private JButton buttonLogin;
 
-    public LoginPremiumGUI(ClientesPremium clientes, ArrayList<DescuentoStrategy> descuentosList, JFrame frame) {
+    public LoginPremiumGUI(ClientesPremium clientes, ArrayList<DescuentoStrategy> descuentosList) {
         panelMain = new JPanel();
         panelMain.setLayout(new GridLayout(8, 1, 5, 5));
 
@@ -37,7 +37,7 @@ public class LoginPremiumGUI extends JPanel {
                         if (clientes.verificarPremium(dniUser)) {
                             DescuentoPorPremium descuentoPorPremium = new DescuentoPorPremium();
                             descuentosList.add(descuentoPorPremium);
-                            frame.dispose();
+                            //frame.dispose();
                         } else {
                             JOptionPane.showMessageDialog(null, "Error: DNI no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
                         }
@@ -55,4 +55,5 @@ public class LoginPremiumGUI extends JPanel {
         panelMain.add(inputDni);
         panelMain.add(buttonLogin);
     }
+
 }

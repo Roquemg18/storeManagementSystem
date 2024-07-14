@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class ListaDeProductos {
+public class ListaDeProductos extends JPanel{
     private JLabel title;
     private JPanel panelLista;
     public JPanel panelMain;

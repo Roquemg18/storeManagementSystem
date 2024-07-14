@@ -13,33 +13,49 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class SupermarketAppGui extends JFrame {
+
     private static ArrayList<DescuentoStrategy> descuentosList = new ArrayList<>();
     private static ClientesPremium clientes = new ClientesPremium();
     protected Inventario inventario = new Inventario();
     protected Carrito carrito = new Carrito();
 
+    public JPanel panelViewContent;
+
     public SupermarketAppGui() {
         setTitle("Supermarket");
-        setSize(300, 300);
+        setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Panel principal
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(4, 1));
+        // Panel principal con BorderLayout
+        JPanel mainPanel = new JPanel(new BorderLayout());
+
+        // Panel de botones
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 3));
 
         JButton clienteButton = new JButton("Ingresar como Cliente");
         JButton adminButton = new JButton("Ingresar como Administrador");
         JButton exitButton = new JButton("Salir");
 
-        panel.add(clienteButton);
-        panel.add(adminButton);
-        panel.add(exitButton);
+        buttonPanel.add(clienteButton);
+        buttonPanel.add(adminButton);
+        buttonPanel.add(exitButton);
 
+        // Panel de contenido
+        panelViewContent = new JPanel(new BorderLayout());
+        panelViewContent.setBackground(Color.black);
+        panelViewContent.setPreferredSize(new Dimension(800, 500));
+
+        mainPanel.add(buttonPanel, BorderLayout.NORTH);
+        mainPanel.add(panelViewContent, BorderLayout.CENTER);
+
+        // Agregar productos de ejemplo al inventario
         inventario.agregarProducto(new Producto(20, "pan", "panaderia"), 20);
         inventario.agregarProducto(new Producto(20, "jamon", "fiambre"), 20);
         inventario.agregarProducto(new Producto(20, "queso", "fiambre"), 20);
 
+        showPanel(new AccionClienteGUI(inventario, carrito, clientes, descuentosList,
+                SupermarketAppGui.this));
 
         clienteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -59,53 +75,34 @@ public class SupermarketAppGui extends JFrame {
             }
         });
 
-        add(panel);
+        add(mainPanel);
     }
 
     private void mostrarMenuCliente() {
         // Aquí puedes implementar el menú del cliente
-        //JOptionPane.showMessageDialog(this, "Menú de Cliente");
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                JFrame frame = new JFrame("mi lista");
                 AccionClienteGUI clienteGUI = new AccionClienteGUI(inventario, carrito,
-                        clientes,descuentosList);
-
-                frame.setContentPane(clienteGUI);
-
-                //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.pack();
-                frame.setSize(500, 300);
-                frame.setVisible(true);
+                        clientes, descuentosList, SupermarketAppGui.this);
+                showPanel(clienteGUI);
             }
         });
     }
 
     private void mostrarMenuAdministrador() {
-        String password = JOptionPane.showInputDialog(this, "Ingrese la clave de " +
-                "administrador:");
+        String password = JOptionPane.showInputDialog(this, "Ingrese la clave de administrador:");
         if (password != null && esAdministrador(password)) {
             // Aquí puedes implementar el menú del administrador
-            //JOptionPane.showMessageDialog(this, "Menú de Administrador");
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    JFrame frame = new JFrame("mi lista");
-                    AccionAdministradorGUI administradorGUI =
-                            new AccionAdministradorGUI(inventario, clientes, descuentosList);
-
-                    frame.setContentPane(administradorGUI);
-
-                    //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    frame.pack();
-                    frame.setSize(500, 300);
-                    frame.setVisible(true);
+                    AccionAdministradorGUI administradorGUI = new AccionAdministradorGUI(inventario, clientes, descuentosList);
+                    showPanel(administradorGUI);
                 }
             });
         } else {
-            JOptionPane.showMessageDialog(this, "Clave incorrecta", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Clave incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -120,5 +117,12 @@ public class SupermarketAppGui extends JFrame {
                 new SupermarketAppGui().setVisible(true);
             }
         });
+    }
+
+    public void showPanel(JPanel panel) {
+        panelViewContent.removeAll();
+        panelViewContent.add(panel, BorderLayout.CENTER);
+        panelViewContent.revalidate();
+        panelViewContent.repaint();
     }
 }

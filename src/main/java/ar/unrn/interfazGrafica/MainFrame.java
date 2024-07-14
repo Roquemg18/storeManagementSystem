@@ -2,7 +2,7 @@ package ar.unrn.interfazGrafica;
 
 import javax.swing.*;
 
-public class MainInterfaz {
+public class MainFrame {
      public static void main(String[] args) {
          SwingUtilities.invokeLater(new Runnable() {
              @Override
