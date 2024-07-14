@@ -12,18 +12,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class ListaDeProductos extends JPanel{
+public class ListaDeProductos extends JPanel {
     private JLabel title;
     private JPanel panelLista;
-    public JPanel panelMain;
+    private JButton finalizarCompraButton;
 
-    public ListaDeProductos(Inventario inventario, Carrito carrito) {
-        panelMain = new JPanel();
-        panelMain.setLayout(new BorderLayout());
+    public ListaDeProductos(Inventario inventario, Carrito carrito, SupermarketAppGui supermarketAppGui) {
+        setLayout(new BorderLayout());
 
+        // Panel para el título
+        JPanel titlePanel = new JPanel();
         title = new JLabel("Productos");
-        panelMain.add(title, BorderLayout.NORTH);
+        titlePanel.add(title);
+        titlePanel.setPreferredSize(new Dimension(getWidth(), 30)); // Ajusta la altura según necesites
+        add(titlePanel, BorderLayout.NORTH);
 
+        // Panel para la lista de productos
         panelLista = new JPanel();
         panelLista.setLayout(new GridLayout(0, 1));
 
@@ -42,9 +46,7 @@ public class ListaDeProductos extends JPanel{
             comprarButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-
-                    carrito.agregarProducto(new ProductoEnCarrito(producto,1 ));
-
+                    carrito.agregarProducto(new ProductoEnCarrito(producto, 1));
                 }
             });
 
@@ -58,10 +60,22 @@ public class ListaDeProductos extends JPanel{
         }
 
         JScrollPane scrollPane = new JScrollPane(panelLista);
-        panelMain.add(scrollPane, BorderLayout.CENTER);
-    }
+        add(scrollPane, BorderLayout.CENTER);
 
-    public JPanel getPanelMain() {
-        return panelMain;
+        // Panel para el botón de finalizar compra
+        JPanel buttonPanel = new JPanel();
+        finalizarCompraButton = new JButton("Finalizar compra");
+        finalizarCompraButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(supermarketAppGui.panelViewContent,
+                        "Productos agregados correctamente al carrito",
+                        "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                supermarketAppGui.showHome();
+            }
+        });
+        buttonPanel.add(finalizarCompraButton);
+        buttonPanel.setPreferredSize(new Dimension(getWidth(), 40)); // Ajusta la altura según necesites
+        add(buttonPanel, BorderLayout.SOUTH);
     }
 }

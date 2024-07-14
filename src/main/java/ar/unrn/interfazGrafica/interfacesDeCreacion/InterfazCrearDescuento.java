@@ -1,5 +1,6 @@
 package ar.unrn.interfazGrafica.interfacesDeCreacion;
 
+import ar.unrn.interfazGrafica.SupermarketAppGui;
 import ar.unrn.strategy.DescuentoPorVolumen;
 import ar.unrn.strategy.DescuentoPromocional;
 import ar.unrn.strategy.DescuentoStrategy;
@@ -10,70 +11,56 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class InterfazCrearDescuento {
+public class InterfazCrearDescuento extends JPanel{
     private JLabel titleDescuento;
     private JButton buttonDesVolumen;
     private JButton buttonDesPromocional;
-    public JPanel panelMainDes;
 
-    public InterfazCrearDescuento(ArrayList<DescuentoStrategy> descuentosList) {
-        panelMainDes = new JPanel();
-        panelMainDes.setLayout(new GridLayout(8, 1, 5, 5));
+    public InterfazCrearDescuento(ArrayList<DescuentoStrategy> descuentosList,
+                                  SupermarketAppGui supermarketAppGui) {
+
+        setLayout(new GridLayout(8, 1, 5, 5));
 
         titleDescuento = new JLabel("Lista de descuentos");
         buttonDesVolumen = new JButton("Crear descuento por volument");
         buttonDesPromocional = new JButton("crear descuento promocional");
 
 
-        panelMainDes.add(titleDescuento);
-        panelMainDes.add(buttonDesVolumen);
-        panelMainDes.add(buttonDesPromocional);
+        add(titleDescuento);
+        add(buttonDesVolumen);
+        add(buttonDesPromocional);
 
 
         buttonDesVolumen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame("Crear Producto");
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                frame.setSize(400, 300);
 
-                InterfazDescuentoPorVolumen interfaz =
-                        new InterfazDescuentoPorVolumen(descuentosList,frame);
-                frame.add(interfaz.panelMain);
+               supermarketAppGui.showPanel(new InterfazDescuentoPorVolumen(descuentosList,supermarketAppGui));
 
-                frame.setVisible(true);
             }
         });
         buttonDesPromocional.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame("Crear Producto");
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                frame.setSize(400, 300);
-
-                InterfazDescuentoPromosional interfaz =
-                        new InterfazDescuentoPromosional(descuentosList, frame);
-                frame.add(interfaz.panelMain);
-
-                frame.setVisible(true);
+                supermarketAppGui.showPanel(new InterfazDescuentoPromosional(descuentosList,
+                        supermarketAppGui));
             }
         });
     }
 
 
-    public static class InterfazDescuentoPorVolumen {
+    public static class InterfazDescuentoPorVolumen extends JPanel{
         private JLabel titleDes;
         private JLabel labelCantidad;
         private JTextField inputCantidad;
         private JLabel labelPorcentaje;
-        public JPanel panelMain;
         private JButton buttonDesVolumen;
         private JTextField inputPorcentaje;
 
         public InterfazDescuentoPorVolumen(ArrayList<DescuentoStrategy> descuentosList,
-         JFrame frame) {
-            panelMain = new JPanel();
-            panelMain.setLayout(new GridLayout(8, 1, 5, 5));
+                                           SupermarketAppGui supermarketAppGui) {
+
+            setLayout(new GridLayout(8, 1, 5, 5));
             titleDes = new JLabel("Descuento por Volumen");
             labelCantidad = new JLabel("Ingrese la cantidada minima para el descuento por volumen ");
             labelPorcentaje = new JLabel("Ingrese el porcentaje de descuento");
@@ -81,12 +68,12 @@ public class InterfazCrearDescuento {
             inputPorcentaje = new JTextField(15);
             buttonDesVolumen = new JButton("crear descuento por volument");
 
-            panelMain.add(titleDes);
-            panelMain.add(labelCantidad);
-            panelMain.add(inputCantidad);
-            panelMain.add(labelPorcentaje);
-            panelMain.add(inputPorcentaje);
-            panelMain.add(buttonDesVolumen);
+            add(titleDes);
+            add(labelCantidad);
+            add(inputCantidad);
+            add(labelPorcentaje);
+            add(inputPorcentaje);
+            add(buttonDesVolumen);
 
 
             buttonDesVolumen.addActionListener(new ActionListener() {
@@ -98,29 +85,29 @@ public class InterfazCrearDescuento {
                     DescuentoPorVolumen desVolumen = new DescuentoPorVolumen(cantidad,porcentaje);
                     descuentosList.add(desVolumen);
 
-                    JOptionPane.showMessageDialog(panelMain, "Cliente creado exitosamente",
+                    JOptionPane.showMessageDialog(supermarketAppGui.panelViewContent, "Cliente creado " +
+                                    "exitosamente",
                             "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-                    frame.dispose();
+                    supermarketAppGui.showHomeAdmin();
 
                 }
             });
         }
     }
 
-    public static class InterfazDescuentoPromosional {
+    public static class InterfazDescuentoPromosional extends JPanel{
         private JLabel titleDes;
         private JLabel labelTipo;
         private JTextField inputTipo;
         private JLabel labelPorcentaje;
-        public JPanel panelMain;
         private JButton buttonDesPromocional;
         private JTextField inputPorcentaje;
 
         public InterfazDescuentoPromosional(ArrayList<DescuentoStrategy> descuentosList
-                , JFrame frame) {
-            panelMain = new JPanel();
-            panelMain.setLayout(new GridLayout(8, 1, 5, 5));
+                , SupermarketAppGui supermarketAppGui) {
+
+            setLayout(new GridLayout(8, 1, 5, 5));
 
             titleDes = new JLabel("Descuento por Volumen");
             labelTipo = new JLabel("Ingrese el tipo del producto ");
@@ -129,12 +116,12 @@ public class InterfazCrearDescuento {
             inputPorcentaje = new JTextField(15);
             buttonDesPromocional = new JButton("crear descuento promocional");
 
-            panelMain.add(titleDes);
-            panelMain.add(labelTipo);
-            panelMain.add(inputTipo);
-            panelMain.add(labelPorcentaje);
-            panelMain.add(inputPorcentaje);
-            panelMain.add(buttonDesPromocional);
+            add(titleDes);
+            add(labelTipo);
+            add(inputTipo);
+            add(labelPorcentaje);
+            add(inputPorcentaje);
+            add(buttonDesPromocional);
 
             buttonDesPromocional.addActionListener(new ActionListener() {
                 @Override
@@ -145,10 +132,11 @@ public class InterfazCrearDescuento {
                     DescuentoPromocional desPromociona = new DescuentoPromocional(tipo,
                             porcentaje);
                     descuentosList.add(desPromociona);
-                    JOptionPane.showMessageDialog(panelMain, "Cliente creado exitosamente",
+                    JOptionPane.showMessageDialog(supermarketAppGui.panelViewContent, "Cliente creado " +
+                                    "exitosamente",
                             "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-                    frame.dispose();
+                    supermarketAppGui.showHomeAdmin();
 
                 }
             });

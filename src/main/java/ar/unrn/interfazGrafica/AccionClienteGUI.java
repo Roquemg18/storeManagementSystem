@@ -16,26 +16,26 @@ public class AccionClienteGUI extends JPanel{
     public AccionClienteGUI(Inventario inventario, Carrito carrito,
                             ClientesPremium clientes, ArrayList<DescuentoStrategy> descuentosList, SupermarketAppGui supermarketAppGui) {
 
-        setLayout(new GridLayout(4, 1));
+        setLayout(new GridLayout(3, 1));
 
         JButton loginPremiumButton = new JButton("Login Cliente Premium");
         JButton crearTicketButton = new JButton("Crear Ticket");
         JButton comprarButton = new JButton("Comprar Producto");
-        JButton volverButton = new JButton("Volver");
 
         loginPremiumButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                supermarketAppGui.showPanel(new LoginPremiumGUI(clientes, descuentosList));
+                supermarketAppGui.showPanel(new LoginPremiumGUI(clientes,
+                        descuentosList,supermarketAppGui));
             }
         });
 
         comprarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               // parentFrame.showPanel(new ListaDeProductos(inventario, carrito,
-                //        parentFrame));
+                supermarketAppGui.showPanel(new ListaDeProductos(inventario, carrito,
+                       supermarketAppGui));
             }
         });
 
@@ -43,20 +43,12 @@ public class AccionClienteGUI extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 supermarketAppGui.showPanel(new CrearTicketGUI(inventario, carrito,
-                        clientes,
-                        descuentosList));
-            }
-        });
-
-        volverButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                supermarketAppGui.showPanel(new AccionClienteGUI(inventario, carrito, clientes, descuentosList, supermarketAppGui));
+                        clientes,descuentosList, supermarketAppGui));
             }
         });
 
         add(loginPremiumButton);
         add(crearTicketButton);
         add(comprarButton);
-        add(volverButton);
     }
 }

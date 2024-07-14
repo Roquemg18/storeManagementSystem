@@ -12,15 +12,15 @@ import java.util.ArrayList;
 
 public class LoginPremiumGUI extends JPanel {
 
-    public JPanel panelMain;
     private JLabel title;
     private JLabel labelDni;
     private JTextField inputDni;
     private JButton buttonLogin;
 
-    public LoginPremiumGUI(ClientesPremium clientes, ArrayList<DescuentoStrategy> descuentosList) {
-        panelMain = new JPanel();
-        panelMain.setLayout(new GridLayout(8, 1, 5, 5));
+    public LoginPremiumGUI(ClientesPremium clientes,
+                           ArrayList<DescuentoStrategy> descuentosList,
+                           SupermarketAppGui supermarketAppGui) {
+        setLayout(new GridLayout(8,1,5,5));
 
         title = new JLabel("Login Cliente Premium");
         labelDni = new JLabel("Ingrese su dni para logearse");
@@ -37,7 +37,7 @@ public class LoginPremiumGUI extends JPanel {
                         if (clientes.verificarPremium(dniUser)) {
                             DescuentoPorPremium descuentoPorPremium = new DescuentoPorPremium();
                             descuentosList.add(descuentoPorPremium);
-                            //frame.dispose();
+                            supermarketAppGui.showHome();
                         } else {
                             JOptionPane.showMessageDialog(null, "Error: DNI no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
                         }
@@ -50,10 +50,10 @@ public class LoginPremiumGUI extends JPanel {
             }
         });
 
-        panelMain.add(title);
-        panelMain.add(labelDni);
-        panelMain.add(inputDni);
-        panelMain.add(buttonLogin);
+        add(title);
+        add(labelDni);
+        add(inputDni);
+        add(buttonLogin);
     }
 
 }

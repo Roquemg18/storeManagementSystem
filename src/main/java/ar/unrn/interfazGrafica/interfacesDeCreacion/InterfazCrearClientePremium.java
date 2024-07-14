@@ -2,13 +2,14 @@ package ar.unrn.interfazGrafica.interfacesDeCreacion;
 
 import ar.unrn.estructura.Cliente;
 import ar.unrn.estructura.ClientesPremium;
+import ar.unrn.interfazGrafica.SupermarketAppGui;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class InterfazCrearClientePremium {
+public class InterfazCrearClientePremium extends JPanel{
     private JLabel title;
     private JLabel labelNombre;
     private JTextField inputNombre;
@@ -17,11 +18,11 @@ public class InterfazCrearClientePremium {
     private JLabel labelEdad;
     private JTextField inputEdad;
     private JButton buttonCliente;
-    public JPanel panelMain;
 
-    public InterfazCrearClientePremium(ClientesPremium clientes, JFrame frame) {
-        panelMain = new JPanel();
-        panelMain.setLayout(new GridLayout(8, 1, 5, 5));
+
+    public InterfazCrearClientePremium(ClientesPremium clientes, SupermarketAppGui supermarketAppGui) {
+
+        setLayout(new GridLayout(8, 1, 5, 5));
 
         title = new JLabel("Crear cliente premium");
         labelNombre = new JLabel("Ingrese nombre del cliente");
@@ -32,14 +33,14 @@ public class InterfazCrearClientePremium {
         inputEdad = new JTextField(15);
         buttonCliente = new JButton("Crear cliente premium");
 
-        panelMain.add(title);
-        panelMain.add(labelNombre);
-        panelMain.add(inputNombre);
-        panelMain.add(labelDni);
-        panelMain.add(inputDni);
-        panelMain.add(labelEdad);
-        panelMain.add(inputEdad);
-        panelMain.add(buttonCliente);
+        add(title);
+        add(labelNombre);
+        add(inputNombre);
+        add(labelDni);
+        add(inputDni);
+        add(labelEdad);
+        add(inputEdad);
+        add(buttonCliente);
 
 
         buttonCliente.addActionListener(new ActionListener() {
@@ -53,19 +54,20 @@ public class InterfazCrearClientePremium {
                     Cliente cliente = new Cliente(nombre, dni, edad);
                     clientes.agregar(cliente);
 
-                    JOptionPane.showMessageDialog(panelMain, "Cliente creado exitosamente",
+                    JOptionPane.showMessageDialog(supermarketAppGui.panelViewContent, "Cliente creado " +
+                                    "exitosamente",
                             "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-                    frame.dispose();
+                    supermarketAppGui.showHomeAdmin();
                     // Limpiar campos después de crear el cliente
                     inputNombre.setText("");
                     inputDni.setText("");
                     inputEdad.setText("");
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(panelMain, "DNI debe ser un número",
+                    JOptionPane.showMessageDialog(supermarketAppGui.panelViewContent, "DNI debe ser un número",
                             "Error", JOptionPane.ERROR_MESSAGE);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(panelMain, "Error al crear cliente: " + ex.getMessage(),
+                    JOptionPane.showMessageDialog(supermarketAppGui.panelViewContent, "Error al crear cliente: " + ex.getMessage(),
                             "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }

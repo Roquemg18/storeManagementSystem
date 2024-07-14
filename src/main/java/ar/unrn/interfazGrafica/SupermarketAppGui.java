@@ -54,8 +54,7 @@ public class SupermarketAppGui extends JFrame {
         inventario.agregarProducto(new Producto(20, "jamon", "fiambre"), 20);
         inventario.agregarProducto(new Producto(20, "queso", "fiambre"), 20);
 
-        showPanel(new AccionClienteGUI(inventario, carrito, clientes, descuentosList,
-                SupermarketAppGui.this));
+        showHome();
 
         clienteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -97,7 +96,9 @@ public class SupermarketAppGui extends JFrame {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    AccionAdministradorGUI administradorGUI = new AccionAdministradorGUI(inventario, clientes, descuentosList);
+                    AccionAdministradorGUI administradorGUI =
+                            new AccionAdministradorGUI(inventario, clientes,
+                                    descuentosList, SupermarketAppGui.this);
                     showPanel(administradorGUI);
                 }
             });
@@ -124,5 +125,15 @@ public class SupermarketAppGui extends JFrame {
         panelViewContent.add(panel, BorderLayout.CENTER);
         panelViewContent.revalidate();
         panelViewContent.repaint();
+    }
+
+    public void showHome() {
+        showPanel(new AccionClienteGUI(inventario, carrito, clientes, descuentosList,
+                SupermarketAppGui.this));
+    }
+
+    public void showHomeAdmin() {
+        showPanel(new AccionAdministradorGUI(inventario, clientes, descuentosList,
+                SupermarketAppGui.this));
     }
 }
