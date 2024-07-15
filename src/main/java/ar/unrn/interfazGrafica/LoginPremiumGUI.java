@@ -20,12 +20,23 @@ public class LoginPremiumGUI extends JPanel {
     public LoginPremiumGUI(ClientesPremium clientes,
                            ArrayList<DescuentoStrategy> descuentosList,
                            SupermarketAppGui supermarketAppGui) {
-        setLayout(new GridLayout(8,1,5,5));
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 5, 5, 5);
 
-        title = new JLabel("Login Cliente Premium");
-        labelDni = new JLabel("Ingrese su dni para logearse");
+        title = new JLabel("Login Cliente Premium", SwingConstants.CENTER);
+        title.setFont(new Font(title.getFont().getName(), Font.BOLD, 26));
+
+        labelDni = new JLabel("Ingrese su dni para logearse", SwingConstants.CENTER);
+        labelDni.setFont(new Font(title.getFont().getName(), Font.BOLD, 16));
+
         inputDni = new JTextField(15);
+        inputDni.setMaximumSize(new Dimension(200, 25));
+
         buttonLogin = new JButton("Logearse");
+        buttonLogin.setMaximumSize(new Dimension(120, 40));
 
         buttonLogin.addActionListener(new ActionListener() {
             @Override
@@ -50,10 +61,12 @@ public class LoginPremiumGUI extends JPanel {
             }
         });
 
-        add(title);
-        add(labelDni);
-        add(inputDni);
-        add(buttonLogin);
+        add(title, gbc);
+        add(Box.createRigidArea(new Dimension(0, 10)), gbc);
+        add(labelDni, gbc);
+        add(Box.createRigidArea(new Dimension(0, 5)), gbc);
+        add(inputDni, gbc);
+        add(Box.createRigidArea(new Dimension(0, 10)), gbc);
+        add(buttonLogin, gbc);
     }
-
 }

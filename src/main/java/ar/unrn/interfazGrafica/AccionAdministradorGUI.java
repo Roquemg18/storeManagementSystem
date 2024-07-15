@@ -13,47 +13,60 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-
 public class AccionAdministradorGUI extends JPanel {
 
     public AccionAdministradorGUI(Inventario inventario, ClientesPremium clientes,
                                   ArrayList<DescuentoStrategy> descuentosList,
                                   SupermarketAppGui supermarketAppGui) {
-        setLayout(new GridLayout(4, 1));
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(10, 10, 10, 10);
 
-        JLabel adminLabel = new JLabel("Interfaz de Administrador", SwingConstants.CENTER);
-        add(adminLabel);
+        // Agregar el título
+        JLabel titleLabel = new JLabel("Acciones Administrador", SwingConstants.CENTER);
+        titleLabel.setFont(new Font(titleLabel.getFont().getName(), Font.BOLD, 30));
+        add(titleLabel, gbc);
+
+        // Agregar espacio después del título
+        add(Box.createRigidArea(new Dimension(0, 20)), gbc);
 
         JButton crearProductoButton = new JButton("Crear Producto");
+        JButton crearDescuentoButton = new JButton("Crear Descuento");
+        JButton crearClientePremiumButton = new JButton("Crear Cliente Premium");
+
+        // Configurar el tamaño de los botones
+        Dimension buttonSize = new Dimension(300, 50);
+        crearProductoButton.setPreferredSize(buttonSize);
+        crearDescuentoButton.setPreferredSize(buttonSize);
+        crearClientePremiumButton.setPreferredSize(buttonSize);
+
         crearProductoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 supermarketAppGui.showPanel(new InterfazCrearProducto(inventario, supermarketAppGui));
-
             }
         });
-        add(crearProductoButton);
 
-        JButton crearDescuentoButton = new JButton("Crear Descuento");
         crearDescuentoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 supermarketAppGui.showPanel(new InterfazCrearDescuento(descuentosList, supermarketAppGui));
             }
         });
-        add(crearDescuentoButton);
 
-        JButton crearClientePremiumButton = new JButton("Crear Cliente Premium");
         crearClientePremiumButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                supermarketAppGui.showPanel(new InterfazCrearClientePremium(clientes,
-                 supermarketAppGui       ));
+                supermarketAppGui.showPanel(new InterfazCrearClientePremium(clientes, supermarketAppGui));
             }
         });
-        add(crearClientePremiumButton);
+
+        add(crearProductoButton, gbc);
+        add(Box.createRigidArea(new Dimension(0, 10)), gbc);
+        add(crearDescuentoButton, gbc);
+        add(Box.createRigidArea(new Dimension(0, 10)), gbc);
+        add(crearClientePremiumButton, gbc);
     }
-
-
 }

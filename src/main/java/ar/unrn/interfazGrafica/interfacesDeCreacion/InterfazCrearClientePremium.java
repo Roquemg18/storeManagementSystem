@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class InterfazCrearClientePremium extends JPanel{
+public class InterfazCrearClientePremium extends JPanel {
     private JLabel title;
     private JLabel labelNombre;
     private JTextField inputNombre;
@@ -19,29 +19,41 @@ public class InterfazCrearClientePremium extends JPanel{
     private JTextField inputEdad;
     private JButton buttonCliente;
 
-
     public InterfazCrearClientePremium(ClientesPremium clientes, SupermarketAppGui supermarketAppGui) {
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 5, 5, 5);
 
-        setLayout(new GridLayout(8, 1, 5, 5));
+        title = new JLabel("Crear cliente premium", SwingConstants.CENTER);
+        title.setFont(new Font(title.getFont().getName(), Font.BOLD, 30));
 
-        title = new JLabel("Crear cliente premium");
-        labelNombre = new JLabel("Ingrese nombre del cliente");
-        labelDni = new JLabel("Ingrese el DNI del cliente");
-        labelEdad = new JLabel("Ingrese la edad del cliente");
-        inputNombre = new JTextField(15);
-        inputDni = new JTextField(15);
-        inputEdad = new JTextField(15);
+        labelNombre = new JLabel("Ingrese nombre del cliente", SwingConstants.CENTER);
+        labelDni = new JLabel("Ingrese el DNI del cliente", SwingConstants.CENTER);
+        labelEdad = new JLabel("Ingrese la edad del cliente", SwingConstants.CENTER);
+
+        inputNombre = new JTextField();
+        inputNombre.setPreferredSize(new Dimension(200, 40));
+
+        inputDni = new JTextField();
+        inputDni.setPreferredSize(new Dimension(200, 40));
+
+        inputEdad = new JTextField();
+        inputEdad.setPreferredSize(new Dimension(200, 40));
+
         buttonCliente = new JButton("Crear cliente premium");
 
-        add(title);
-        add(labelNombre);
-        add(inputNombre);
-        add(labelDni);
-        add(inputDni);
-        add(labelEdad);
-        add(inputEdad);
-        add(buttonCliente);
-
+        add(title, gbc);
+        add(Box.createRigidArea(new Dimension(0, 20)), gbc);
+        add(labelNombre, gbc);
+        add(inputNombre, gbc);
+        add(labelDni, gbc);
+        add(inputDni, gbc);
+        add(labelEdad, gbc);
+        add(inputEdad, gbc);
+        add(Box.createRigidArea(new Dimension(0, 20)), gbc);
+        add(buttonCliente, gbc);
 
         buttonCliente.addActionListener(new ActionListener() {
             @Override
@@ -54,8 +66,7 @@ public class InterfazCrearClientePremium extends JPanel{
                     Cliente cliente = new Cliente(nombre, dni, edad);
                     clientes.agregar(cliente);
 
-                    JOptionPane.showMessageDialog(supermarketAppGui.panelViewContent, "Cliente creado " +
-                                    "exitosamente",
+                    JOptionPane.showMessageDialog(supermarketAppGui.panelViewContent, "Cliente creado exitosamente",
                             "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
                     supermarketAppGui.showHomeAdmin();
@@ -64,7 +75,7 @@ public class InterfazCrearClientePremium extends JPanel{
                     inputDni.setText("");
                     inputEdad.setText("");
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(supermarketAppGui.panelViewContent, "DNI debe ser un número",
+                    JOptionPane.showMessageDialog(supermarketAppGui.panelViewContent, "DNI y edad deben ser números",
                             "Error", JOptionPane.ERROR_MESSAGE);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(supermarketAppGui.panelViewContent, "Error al crear cliente: " + ex.getMessage(),

@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class InterfazCrearDescuento extends JPanel{
+public class InterfazCrearDescuento extends JPanel {
     private JLabel titleDescuento;
     private JButton buttonDesVolumen;
     private JButton buttonDesPromocional;
@@ -19,37 +19,45 @@ public class InterfazCrearDescuento extends JPanel{
     public InterfazCrearDescuento(ArrayList<DescuentoStrategy> descuentosList,
                                   SupermarketAppGui supermarketAppGui) {
 
-        setLayout(new GridLayout(8, 1, 5, 5));
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(10, 10, 10, 10);
 
-        titleDescuento = new JLabel("Lista de descuentos");
-        buttonDesVolumen = new JButton("Crear descuento por volument");
-        buttonDesPromocional = new JButton("crear descuento promocional");
+        titleDescuento = new JLabel("Lista de descuentos", SwingConstants.CENTER);
+        titleDescuento.setFont(new Font("Arial", Font.BOLD, 20));
 
+        buttonDesVolumen = new JButton("Crear descuento por volumen");
+        buttonDesVolumen.setPreferredSize(new Dimension(280, 30));
 
-        add(titleDescuento);
-        add(buttonDesVolumen);
-        add(buttonDesPromocional);
+        buttonDesPromocional = new JButton("Crear descuento promocional");
+        buttonDesPromocional.setPreferredSize(new Dimension(280, 30));
 
+        add(titleDescuento, gbc);
+        add(Box.createRigidArea(new Dimension(0, 20)), gbc);
+        add(buttonDesVolumen, gbc);
+        add(Box.createRigidArea(new Dimension(0, 10)), gbc);
+        add(buttonDesPromocional, gbc);
 
         buttonDesVolumen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-               supermarketAppGui.showPanel(new InterfazDescuentoPorVolumen(descuentosList,supermarketAppGui));
-
+                supermarketAppGui.showPanel(new InterfazDescuentoPorVolumen(descuentosList, supermarketAppGui));
             }
         });
+
         buttonDesPromocional.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                supermarketAppGui.showPanel(new InterfazDescuentoPromosional(descuentosList,
-                        supermarketAppGui));
+                supermarketAppGui.showPanel(new InterfazDescuentoPromocional(descuentosList, supermarketAppGui));
             }
         });
     }
 
 
-    public static class InterfazDescuentoPorVolumen extends JPanel{
+
+    public static class InterfazDescuentoPorVolumen extends JPanel {
         private JLabel titleDes;
         private JLabel labelCantidad;
         private JTextField inputCantidad;
@@ -60,20 +68,34 @@ public class InterfazCrearDescuento extends JPanel{
         public InterfazDescuentoPorVolumen(ArrayList<DescuentoStrategy> descuentosList,
                                            SupermarketAppGui supermarketAppGui) {
 
-            setLayout(new GridLayout(8, 1, 5, 5));
-            titleDes = new JLabel("Descuento por Volumen");
-            labelCantidad = new JLabel("Ingrese la cantidada minima para el descuento por volumen ");
-            labelPorcentaje = new JLabel("Ingrese el porcentaje de descuento");
-            inputCantidad = new JTextField(15);
-            inputPorcentaje = new JTextField(15);
-            buttonDesVolumen = new JButton("crear descuento por volument");
+            setLayout(new GridBagLayout());
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridwidth = GridBagConstraints.REMAINDER;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.insets = new Insets(5, 5, 5, 5);
 
-            add(titleDes);
-            add(labelCantidad);
-            add(inputCantidad);
-            add(labelPorcentaje);
-            add(inputPorcentaje);
-            add(buttonDesVolumen);
+            titleDes = new JLabel("Descuento por Volumen", SwingConstants.CENTER);
+            titleDes.setFont(new Font(titleDes.getFont().getName(), Font.BOLD, 30));
+
+            labelCantidad = new JLabel("Ingrese la cantidad mínima para el descuento por volumen", SwingConstants.CENTER);
+            labelPorcentaje = new JLabel("Ingrese el porcentaje de descuento", SwingConstants.CENTER);
+
+            inputCantidad = new JTextField();
+            inputCantidad.setPreferredSize(new Dimension(200, 40));
+
+            inputPorcentaje = new JTextField();
+            inputPorcentaje.setPreferredSize(new Dimension(200, 40));
+
+            buttonDesVolumen = new JButton("Crear descuento por volumen");
+
+            add(titleDes, gbc);
+            add(Box.createRigidArea(new Dimension(0, 20)), gbc);
+            add(labelCantidad, gbc);
+            add(inputCantidad, gbc);
+            add(labelPorcentaje, gbc);
+            add(inputPorcentaje, gbc);
+            add(Box.createRigidArea(new Dimension(0, 20)), gbc);
+            add(buttonDesVolumen, gbc);
 
 
             buttonDesVolumen.addActionListener(new ActionListener() {
@@ -96,7 +118,7 @@ public class InterfazCrearDescuento extends JPanel{
         }
     }
 
-    public static class InterfazDescuentoPromosional extends JPanel{
+    public static class InterfazDescuentoPromocional extends JPanel {
         private JLabel titleDes;
         private JLabel labelTipo;
         private JTextField inputTipo;
@@ -104,24 +126,37 @@ public class InterfazCrearDescuento extends JPanel{
         private JButton buttonDesPromocional;
         private JTextField inputPorcentaje;
 
-        public InterfazDescuentoPromosional(ArrayList<DescuentoStrategy> descuentosList
-                , SupermarketAppGui supermarketAppGui) {
+        public InterfazDescuentoPromocional(ArrayList<DescuentoStrategy> descuentosList,
+                                            SupermarketAppGui supermarketAppGui) {
 
-            setLayout(new GridLayout(8, 1, 5, 5));
+            setLayout(new GridBagLayout());
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridwidth = GridBagConstraints.REMAINDER;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.insets = new Insets(5, 5, 5, 5);
 
-            titleDes = new JLabel("Descuento por Volumen");
-            labelTipo = new JLabel("Ingrese el tipo del producto ");
-            labelPorcentaje = new JLabel("Ingrese el porcentaje de descuento");
-            inputTipo = new JTextField(15);
-            inputPorcentaje = new JTextField(15);
-            buttonDesPromocional = new JButton("crear descuento promocional");
+            titleDes = new JLabel("Descuento Promocional", SwingConstants.CENTER);
+            titleDes.setFont(new Font(titleDes.getFont().getName(), Font.BOLD, 30));
 
-            add(titleDes);
-            add(labelTipo);
-            add(inputTipo);
-            add(labelPorcentaje);
-            add(inputPorcentaje);
-            add(buttonDesPromocional);
+            labelTipo = new JLabel("Ingrese el tipo del producto", SwingConstants.CENTER);
+            labelPorcentaje = new JLabel("Ingrese el porcentaje de descuento", SwingConstants.CENTER);
+
+            inputTipo = new JTextField();
+            inputTipo.setPreferredSize(new Dimension(200, 40));
+
+            inputPorcentaje = new JTextField();
+            inputPorcentaje.setPreferredSize(new Dimension(200, 40));
+
+            buttonDesPromocional = new JButton("Crear descuento promocional");
+
+            add(titleDes, gbc);
+            add(Box.createRigidArea(new Dimension(0, 20)), gbc);
+            add(labelTipo, gbc);
+            add(inputTipo, gbc);
+            add(labelPorcentaje, gbc);
+            add(inputPorcentaje, gbc);
+            add(Box.createRigidArea(new Dimension(0, 20)), gbc);
+            add(buttonDesPromocional, gbc);
 
             buttonDesPromocional.addActionListener(new ActionListener() {
                 @Override
